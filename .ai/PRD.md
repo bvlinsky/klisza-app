@@ -377,8 +377,8 @@ Aplikacja webowa z retro designem przypominającym jednorazowy aparat, która um
 
 ### Dla gości (public)
 ```
-GET  /event/{id}              → Strona uploadu dla gości (Vue SPA)
-POST /event/{id}/guest        → Utworzenie/pobranie gościa po imieniu i session_id
-POST /event/{id}/upload       → Upload zdjęcia (walidacja: limit, czas, guest_id)
-GET  /gallery/{id}            → Galeria opublikowanych zdjęć
+GET  /event/{event_id}              → Strona uploadu dla gości (Vue SPA)
+POST /event/{event_id}/guest        → Utworzenie gościa po imieniu i pobranie session_id
+POST /event/{event_id}/upload       → Upload zdjęcia (walidacja: limit, czas, guest_id)
+GET  /gallery/{event_id}            → Galeria opublikowanych zdjęć
 ```

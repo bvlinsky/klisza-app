@@ -1,6 +1,6 @@
 ### Tabela: users
 ```
-id (primary key)
+id (UUID primary key)
 email (unique)
 password (hashed)
 created_at
@@ -9,21 +9,19 @@ updated_at
 
 ### Tabela: events
 ```
-id (primary key)
-user_id (foreign key → users)
+id (UUID primary key, used for guest and gallery URLs)
+user_id (UUID foreign key → users)
 name (string, required)
 date (datetime, required)
-slug (unique, for guest URL)
 gallery_published (boolean, default false)
-gallery_slug (unique, for gallery URL, nullable)
 created_at
 updated_at
 ```
 
 ### Tabela: guests
 ```
-id (primary key)
-event_id (foreign key → events)
+id (UUID primary key)
+event_id (UUID foreign key → events)
 name (string, required)
 session_id (string, unique - z localStorage)
 created_at
@@ -32,11 +30,12 @@ updated_at
 
 ### Tabela: photos
 ```
-id (primary key)
-event_id (foreign key → events)
-guest_id (foreign key → guests)
+id (UUID primary key)
+event_id (UUID foreign key → events)
+guest_id (UUID foreign key → guests)
 filename (UUID v6)
 uploaded_at (timestamp)
+taken_at (timestamp, nullable)
 deleted_at (soft delete, nullable)
 ```
 

@@ -12,11 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('photos', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('event_id')->constrained()->onDelete('cascade');
-            $table->foreignId('guest_id')->constrained()->onDelete('cascade');
+            $table->uuid('id')->primary();
+            $table->foreignUuid('event_id')->constrained()->onDelete('cascade');
+            $table->foreignUuid('guest_id')->constrained()->onDelete('cascade');
             $table->string('filename');
             $table->timestamp('uploaded_at');
+            $table->timestamp('taken_at')->nullable();
             $table->softDeletes();
         });
     }
