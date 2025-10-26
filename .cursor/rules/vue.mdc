@@ -1,0 +1,15 @@
+---
+globs: guest/**/*.*
+alwaysApply: false
+---
+# AI Rules for Analog Snap
+SPA app for guests
+
+## Tech Stack
+- Vue 3 - composition API
+- Nuxt 4
+- Nuxt UI 4
+- Tailwind 4
+
+## Coding practices
+- develop styles based on Tailwind - don't create dedicated CSS

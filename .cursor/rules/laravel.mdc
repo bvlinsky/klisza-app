@@ -1,0 +1,10 @@
+---
+globs: admin/**/*.*
+alwaysApply: false
+---
+# AI Rules for Analog Snap API
+Headless api with admin panel in filament
+
+## Tech Stack
+- Laravel 12
+- Filament 4
