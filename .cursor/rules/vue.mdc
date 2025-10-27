@@ -10,6 +10,9 @@ SPA app for guests
 - Nuxt 4
 - Nuxt UI 4
 - Tailwind 4
+- Bun
 
 ## Coding practices
+- use bun instead of npm to manage packages
+- use openapi-fetch package to comunicate with api
 - develop styles based on Tailwind - don't create dedicated CSS
