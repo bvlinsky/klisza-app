@@ -1,0 +1,28 @@
+services:
+  guest:
+    image: oven/bun:1
+    working_dir: /usr/src/app
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./guest:/usr/src/app
+      - guest_node_modules:/usr/src/app/node_modules
+    environment:
+      NODE_ENV: development
+    command: >
+      sh -c "bun install && bun run dev -- --host 0.0.0.0 --port 3000"
+
+  admin:
+    image: thecodingmachine/php:8.4.3-v4-apache
+    ports:
+      - 80:80
+    volumes:
+      - ./admin:/var/www/html/
+    environment:
+      PHP_INI_MEMORY_LIMIT: 1g
+      APACHE_DOCUMENT_ROOT: public/
+      PHP_EXTENSION_INTL: 1
+      PHP_EXTENSION_PDO_SQLITE: 1
+
+volumes:
+  guest_node_modules:
