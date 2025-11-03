@@ -76,10 +76,6 @@ Aplikacja webowa z retro designem przypominającym jednorazowy aparat, która um
   - Walidacja po stronie klienta i serwera (czas serwera jako autorytatywny)
   - Jasne komunikaty o statusie: "Wydarzenie jeszcze się nie rozpoczęło" lub "Wydarzenie już się zakończyło"
 
-- **Obsługa błędów:**
-  - Przyjazne komunikaty w stylu retro
-  - Walidacja formatu plików
-  - Logowanie szczegółów po stronie serwera
 
 #### 2.1.3 Galeria dla gości (po publikacji)
 - Dostęp przez unikalny link udostępniony przez organizatora
@@ -129,7 +125,7 @@ Aplikacja webowa z retro designem przypominającym jednorazowy aparat, która um
 ```
 
 #### Nazewnictwo plików
-- Format: UUID v6 (generowany dla każdego zdjęcia)
+- Format: UUID (generowany dla każdego zdjęcia)
 - Losowe nazwy dla bezpieczeństwa (utrudnienie odgadnięcia URL)
 - Rozszerzenie: `.jpg`
 
@@ -144,7 +140,7 @@ Aplikacja webowa z retro designem przypominającym jednorazowy aparat, która um
 2. Przycinanie do aspect ratio 4:3 (centrowane) - po stronie klienta
 3. Kompresja do maksymalnej rozdzielczości 2560x1920 - po stronie klienta
 4. Jakość JPEG: 85% - po stronie klienta
-5. Zapisanie z UUID v6 jako nazwą pliku
+5. Zapisanie z UUID jako nazwą pliku
 
 #### Parametry kompresji (po stronie klienta)
 - Format wyjściowy: JPEG
@@ -177,7 +173,6 @@ Aplikacja webowa z retro designem przypominającym jednorazowy aparat, która um
 - Wszystkie walidacje z klienta (dla bezpieczeństwa)
 - Weryfikacja UUID wydarzenia
 - Czas serwera jako autorytatywny
-- Rate limiting dla ochrony przed nadużyciami
 
 ### 3.6 Wymagania wydajnościowe
 - Kompresja zdjęć przed wysłaniem (po stronie klienta)
@@ -267,7 +262,7 @@ Aplikacja webowa z retro designem przypominającym jednorazowy aparat, która um
 - Zdjęcia są powiązane z gościem w bazie
 - Przesłanie działa tylko w całej dobie wydarzenia + 12h przed i po
 - Limit 15 zdjęć per sesja
-- Feedback o powodzeniu/błędzie
+- Feedback o powodzeniu
 
 #### US5: Próba przesłania poza oknem czasowym
 **Jako** gość weselny  
@@ -350,8 +345,7 @@ Aplikacja webowa z retro designem przypominającym jednorazowy aparat, która um
 
 ### 7.1 Bezpieczeństwo
 - Silne hasła dla organizatorów (walidacja Laravel)
-- Losowe nazwy plików (UUID v6)
-- Rate limiting dla API
+- Losowe nazwy plików (UUID)
 - HTTPS dla całej aplikacji
 - Walidacja po stronie serwera (defense in depth)
 
@@ -368,7 +362,6 @@ Aplikacja webowa z retro designem przypominającym jednorazowy aparat, która um
 
 ### 7.4 Użyteczność
 - Intuicyjny interfejs (maksymalnie 3 kliknięcia dla kluczowych akcji)
-- Przyjazne komunikaty błędów
 - Spójność wizualna (retro dla gości, funkcjonalny dla organizatorów)
 
 ---

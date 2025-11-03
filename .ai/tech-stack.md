@@ -3,6 +3,7 @@
 ## Backend (/admin)
 - Laravel 12
 - Filament 4
+- Laravel Sanctum
 
 ## Frontend (/guest)
 - Vue 3 - composition API
