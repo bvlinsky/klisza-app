@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Event extends Model
 {
-    use HasUuids;
+    use HasFactory, HasUuids;
 
     protected $fillable = [
         'user_id',
@@ -39,5 +40,33 @@ class Event extends Model
     public function photos(): HasMany
     {
         return $this->hasMany(Photo::class);
+    }
+
+    /**
+     * Check if the upload window is currently open.
+     */
+    public function isUploadWindowOpen(): bool
+    {
+        $now = now();
+        $uploadWindowStart = $this->date->copy()->subHours(12);
+        $uploadWindowEnd = $this->date->copy()->addHours(12);
+
+        return $now->isBetween($uploadWindowStart, $uploadWindowEnd);
+    }
+
+    /**
+     * Get the upload window start time.
+     */
+    public function getUploadWindowStart(): \Carbon\Carbon
+    {
+        return $this->date->copy()->subHours(12);
+    }
+
+    /**
+     * Get the upload window end time.
+     */
+    public function getUploadWindowEnd(): \Carbon\Carbon
+    {
+        return $this->date->copy()->addHours(12);
     }
 }

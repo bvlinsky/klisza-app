@@ -34,8 +34,9 @@ id (UUID primary key)
 event_id (UUID foreign key → events)
 guest_id (UUID foreign key → guests)
 filename (UUID v6)
-uploaded_at (timestamp)
 taken_at (timestamp, nullable)
+created_at
+updated_at
 deleted_at (soft delete, nullable)
 ```
 

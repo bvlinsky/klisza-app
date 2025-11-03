@@ -15,7 +15,6 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('event_id')->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->string('session_id')->unique();
             $table->timestamps();
         });
     }
