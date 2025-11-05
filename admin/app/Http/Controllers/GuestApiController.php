@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\GuestAuthRequest;
 use App\Models\Event;
 use App\Models\Guest;
 
-class GuestApiController extends Controller
+class GuestApiController
 {
     public function authenticate(GuestAuthRequest $request, Event $event): array
     {

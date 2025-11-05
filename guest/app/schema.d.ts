@@ -137,7 +137,6 @@ export interface operations {
                     "application/json": {
                         id: string;
                         name: string;
-                        /** Format: date-time */
                         date: string;
                         gallery_published: boolean;
                     };

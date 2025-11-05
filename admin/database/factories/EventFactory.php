@@ -20,7 +20,7 @@ class EventFactory extends Factory
         return [
             'user_id' => User::factory(),
             'name' => fake()->sentence(2),
-            'date' => fake()->dateTimeBetween('now', '+1 year'),
+            'date' => fake()->dateTimeBetween('now', '+1 year')->format('Y-m-d'),
             'gallery_published' => fake()->boolean(),
         ];
     }

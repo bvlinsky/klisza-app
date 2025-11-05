@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Api\EventApiController;
-use App\Http\Controllers\Api\GuestApiController;
-use App\Http\Controllers\Api\PhotoApiController;
+use App\Http\Controllers\EventApiController;
+use App\Http\Controllers\GuestApiController;
+use App\Http\Controllers\PhotoApiController;
 use Illuminate\Support\Facades\Route;
 
 // Event metadata (public)

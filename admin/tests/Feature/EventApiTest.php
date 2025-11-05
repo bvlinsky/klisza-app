@@ -18,7 +18,7 @@ test('can retrieve event metadata', function () {
         ->assertJson([
             'id' => $event->id,
             'name' => 'Test Wedding',
-            'date' => $event->date->toISOString(),
+            'date' => $event->date->toDateString(),
             'gallery_published' => true,
         ]);
 });

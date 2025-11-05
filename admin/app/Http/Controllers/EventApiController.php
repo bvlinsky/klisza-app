@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Event;
 
-class EventApiController extends Controller
+class EventApiController
 {
     public function show(Event $event): array
     {
         return [
             'id' => $event->id,
             'name' => $event->name,
-            'date' => $event->date,
+            'date' => $event->date->toDateString(),
             'gallery_published' => $event->gallery_published,
         ];
     }

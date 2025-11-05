@@ -15,12 +15,12 @@ migrate:
 	docker compose exec admin php artisan migrate
 
 types:
-	docker compose exec admin php ./admin/artisan scramble:export
-	docker compose exec guest bunx openapi-typescript api.json -o ./guest/app/schema.d.ts
-	rm api.json
+	docker compose exec admin php artisan scramble:export
+	bunx openapi-typescript ./admin/api.json -o ./guest/app/schema.d.ts
+	rm ./admin/api.json
 
 format:
-	docker compose exec admin ./admin/vendor/bin/pint
+	docker compose exec admin vendor/bin/pint
 
 pre-commit:
 	make types

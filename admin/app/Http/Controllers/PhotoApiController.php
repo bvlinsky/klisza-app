@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\PhotoUploadRequest;
 use App\Models\Event;
 use App\Models\Photo;
 use Illuminate\Support\Str;
 
-class PhotoApiController extends Controller
+class PhotoApiController
 {
     public function store(PhotoUploadRequest $request, Event $event): array
     {
@@ -27,8 +26,8 @@ class PhotoApiController extends Controller
         // Generate UUID v6 filename
         $filename = (string) Str::uuid().'.jpg';
 
-        // Store file in private disk
-        $path = $request->file('file')->storeAs('photos', $filename, 'private');
+        // Store file
+        $request->file('file')->storeAs('photos', $filename);
 
         // Create photo record
         Photo::create([

@@ -1,0 +1,182 @@
+<template>
+  <div class="fixed inset-0 overflow-hidden bg-black">
+    <!-- Welcome Modal with name input - First time visit -->
+    <WelcomeModal
+      v-model="uiStore.showWelcomeModal"
+      :event-name="eventStore.event?.name"
+      :event-date="eventStore.event?.date"
+      :is-loading="uiStore.isAuthenticating"
+      :validation-errors="authValidationErrors"
+      @submit="handleNameSubmit"
+    />
+
+    <!-- Retro Camera Interface - Main view after auth -->
+    <RetroCameraView
+      v-if="!uiStore.showWelcomeModal && eventStore.event"
+      :quota-remaining="eventStore.quotaRemaining"
+      :is-uploading="uiStore.isUploading"
+      @capture="handleCapture"
+    />
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import { useHead } from '#imports'
+import { useEventStore } from '~/stores/event'
+import { useUiStore } from '~/stores/ui'
+import { api } from '~/composables/useApi'
+import { useAppToast } from '~/composables/useToast'
+import WelcomeModal from '~/components/WelcomeModal.vue'
+import RetroCameraView from '~/components/RetroCameraView.vue'
+
+// Composables
+const route = useRoute()
+const eventId = route.params.event_id as string
+const { showError, showWarning } = useAppToast()
+
+// Stores
+const eventStore = useEventStore()
+const uiStore = useUiStore()
+
+// Reactive state
+const authValidationErrors = ref<Record<string, string[]>>({})
+
+// Methods
+
+const handleNameSubmit = async (name: string) => {
+  uiStore.setAuthenticating(true)
+  authValidationErrors.value = {}
+
+  try {
+    const response = await api.authenticateGuest(eventId, name)
+
+    if (response.error) {
+      // Handle API errors
+      if (response.error.status === 422 && response.error.content?.errors) {
+        // Validation errors
+        authValidationErrors.value = response.error.content.errors
+      } else {
+        // Other errors - show toast
+        console.error('Authentication error:', response.error)
+        showError('Nie udało się zalogować. Spróbuj ponownie.')
+      }
+      return
+    }
+
+    if (response.data) {
+      // Success
+      eventStore.setAuthData(response.data)
+      uiStore.hideWelcome()
+    }
+  } catch (error) {
+    console.error('Network error during authentication:', error)
+    showError('Problem z połączeniem internetowym. Sprawdź połączenie i spróbuj ponownie.')
+  } finally {
+    uiStore.setAuthenticating(false)
+  }
+}
+
+const handleCapture = async (photoBlob: Blob) => {
+  uiStore.setUploading(true)
+
+  try {
+    // Format date for backend (YYYY-MM-DD HH:mm:ss)
+    const now = new Date()
+    const formattedDate = now.toISOString().slice(0, 19).replace('T', ' ')
+
+    console.log('Upload photo:', { eventId, fileSize: photoBlob.size, takenAt: formattedDate })
+
+    const response = await api.uploadPhoto(eventId, photoBlob, formattedDate)
+
+    if (response.error) {
+      // Handle upload errors
+      if (response.error.status === 401) {
+        // Token expired - clear auth and show name modal
+        eventStore.clearAuth()
+        uiStore.showNameInput()
+        showWarning('Sesja wygasła. Zaloguj się ponownie.')
+      } else if (response.error.status === 403) {
+        // Upload window closed
+        console.error('Upload window closed')
+        showError('Okno na wysyłanie zdjęć zostało zamknięte przez organizatora.')
+      } else if (response.error.status === 422) {
+        // Validation error
+        console.error('Upload validation error:', response.error.content?.errors)
+        showError('Zdjęcie nie spełnia wymagań. Spróbuj zrobić inne zdjęcie.')
+      } else if (response.error.status === 429) {
+        // Quota exceeded
+        console.error('Upload quota exceeded')
+        showError('Osiągnięto limit zdjęć na dzisiaj.')
+      } else {
+        console.error('Upload error:', response.error)
+        showError('Nie udało się wysłać zdjęcia. Spróbuj ponownie.')
+      }
+      return
+    }
+
+    if (response.data) {
+      // Success - update quota
+      const newQuota = parseInt(response.data.quota_remaining)
+      eventStore.updateQuota(newQuota)
+    }
+  } catch (error) {
+    console.error('Network error during upload:', error)
+    showError('Problem z połączeniem internetowym. Sprawdź połączenie i spróbuj ponownie.')
+  } finally {
+    uiStore.setUploading(false)
+  }
+}
+
+// Lifecycle
+onMounted(async () => {
+  try {
+    const response = await api.getEvent(eventId)
+
+    if (response.error) {
+      // Handle API errors
+      if (response.error.status === 404) {
+        // Event not found
+        console.error('Event not found:', eventId)
+        showError('Wydarzenie nie zostało znalezione.')
+        // TODO: Redirect to not found page
+      } else {
+        console.error('Error fetching event:', response.error)
+        showError('Nie udało się pobrać danych wydarzenia. Odśwież stronę.')
+      }
+      return
+    }
+
+    if (response.data) {
+      eventStore.setEvent(response.data)
+
+      // Check if user has a token for this event
+      const storedToken = localStorage.getItem(`analog_snap_token_${eventId}`)
+      console.log('Stored token for event', eventId, ':', storedToken)
+
+      if (!storedToken) {
+        console.log('No token found, showing welcome modal')
+        uiStore.showWelcome()
+      } else {
+        console.log('Token found, loading auth data and skipping modal')
+        eventStore.setAuthData({
+          access_token: storedToken,
+          quota_remaining: 15 // This should be fetched from API, but for now use default
+        })
+      }
+    }
+  } catch (error) {
+    console.error('Network error fetching event:', error)
+    showError('Problem z połączeniem internetowym. Sprawdź połączenie i odśwież stronę.')
+  }
+})
+
+// Head
+useHead({
+  title: eventStore.event?.name || 'Analog Snap',
+  meta: [
+    { name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' },
+    { name: 'theme-color', content: '#000000' },
+  ],
+})
+</script>

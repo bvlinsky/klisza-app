@@ -8,7 +8,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 test('can upload photo with valid authentication', function () {
-    Storage::fake('private');
+    Storage::fake('local');
 
     $user = User::factory()->create();
     $event = Event::factory()->create([
@@ -43,7 +43,7 @@ test('can upload photo with valid authentication', function () {
     expect($photo->filename)->toContain('.jpg');
 
     // Verify file was stored
-    Storage::disk('private')->assertExists("photos/{$photo->filename}");
+    Storage::disk('local')->assertExists("photos/{$photo->filename}");
 });
 
 test('requires authentication for photo upload', function () {
@@ -225,7 +225,7 @@ test('rejects upload when quota is exceeded', function () {
 });
 
 test('correctly calculates remaining quota after upload', function () {
-    Storage::fake('private');
+    Storage::fake('local');
 
     $user = User::factory()->create();
     $event = Event::factory()->create([

@@ -22,7 +22,7 @@ class Event extends Model
     protected function casts(): array
     {
         return [
-            'date' => 'datetime',
+            'date' => 'date',
             'gallery_published' => 'boolean',
         ];
     }
@@ -44,18 +44,20 @@ class Event extends Model
 
     /**
      * Check if the upload window is currently open.
+     * Upload window: ±12h from midnight (noon day before to noon day after).
      */
     public function isUploadWindowOpen(): bool
     {
         $now = now();
         $uploadWindowStart = $this->date->copy()->subHours(12);
-        $uploadWindowEnd = $this->date->copy()->addHours(12);
+        $uploadWindowEnd = $this->date->copy()->addDay()->addHours(12);
 
         return $now->isBetween($uploadWindowStart, $uploadWindowEnd);
     }
 
     /**
      * Get the upload window start time.
+     * Returns noon of the day before the event.
      */
     public function getUploadWindowStart(): \Carbon\Carbon
     {
@@ -64,9 +66,10 @@ class Event extends Model
 
     /**
      * Get the upload window end time.
+     * Returns noon of the day after the event.
      */
     public function getUploadWindowEnd(): \Carbon\Carbon
     {
-        return $this->date->copy()->addHours(12);
+        return $this->date->copy()->addDay()->addHours(12);
     }
 }

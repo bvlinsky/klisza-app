@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('user_id')->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->datetime('date');
+            $table->date('date');
             $table->boolean('gallery_published')->default(false);
             $table->timestamps();
         });
