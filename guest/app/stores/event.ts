@@ -46,11 +46,15 @@ export const useEventStore = defineStore('event', () => {
     // Store token in localStorage with event-specific key
     if (event.value) {
       localStorage.setItem(`analog_snap_token_${event.value.id}`, authData.access_token)
+      localStorage.setItem(`analog_snap_quota_${event.value.id}`, String(authData.quota_remaining))
     }
   }
 
   const updateQuota = (remaining: number) => {
     quotaRemaining.value = remaining
+    if (event.value) {
+      localStorage.setItem(`analog_snap_quota_${event.value.id}`, String(remaining))
+    }
   }
 
   const loadStoredToken = (eventId: string) => {
@@ -58,6 +62,14 @@ export const useEventStore = defineStore('event', () => {
     if (storedToken) {
       accessToken.value = storedToken
       isAuthenticated.value = true
+
+      const storedQuota = localStorage.getItem(`analog_snap_quota_${eventId}`)
+      if (storedQuota) {
+        const parsed = parseInt(storedQuota, 10)
+        if (!Number.isNaN(parsed)) {
+          quotaRemaining.value = parsed
+        }
+      }
     }
   }
 
@@ -69,6 +81,7 @@ export const useEventStore = defineStore('event', () => {
     // Clear from localStorage
     if (event.value) {
       localStorage.removeItem(`analog_snap_token_${event.value.id}`)
+      localStorage.removeItem(`analog_snap_quota_${event.value.id}`)
     }
   }
 

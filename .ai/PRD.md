@@ -64,10 +64,10 @@ Aplikacja webowa z retro designem przypominającym jednorazowy aparat, która um
   - Tracking sesji przez localStorage
 
 - **Upload zdjęć:**
-  - Tylko upload gotowych zdjęć (brak bezpośredniego dostępu do kamery przez WebRTC)
-  - Uprawnienie do dostępu do plików
-  - Automatyczne przycinanie do aspect ratio 4:3 (centrowane)
-  - Kompresja do maksymalnej rozdzielczości 2560x1920 (JPEG 85% jakości)
+- Tylko upload gotowych zdjęć (brak bezpośredniego dostępu do kamery przez WebRTC)
+- Uprawnienie do dostępu do plików
+- Automatyczne przycinanie do aspect ratio 3:4 (centrowane)
+- Kompresja do maksymalnej rozdzielczości 1920x2560 (JPEG 85% jakości)
   - Maksymalnie 15 zdjęć na uczestnika (limit per sesja/localStorage)
   - Walidacja po stronie klienta i serwera
 
@@ -137,15 +137,15 @@ Aplikacja webowa z retro designem przypominającym jednorazowy aparat, która um
 
 #### Pipeline przetwarzania
 1. Walidacja formatu i rozmiaru pliku
-2. Przycinanie do aspect ratio 4:3 (centrowane) - po stronie klienta
-3. Kompresja do maksymalnej rozdzielczości 2560x1920 - po stronie klienta
+ 2. Przycinanie do aspect ratio 3:4 (centrowane) - po stronie klienta
+ 3. Kompresja do maksymalnej rozdzielczości 1920x2560 - po stronie klienta
 4. Jakość JPEG: 85% - po stronie klienta
 5. Zapisanie z UUID jako nazwą pliku
 
 #### Parametry kompresji (po stronie klienta)
 - Format wyjściowy: JPEG
 - Jakość: 85%
-- Maksymalna rozdzielczość: 2560x1920 (4:3)
+- Maksymalna rozdzielczość: 1920x2560 (3:4)
 - Automatyczne skalowanie w dół (bez powiększania małych zdjęć)
 
 ### 3.4 Zarządzanie sesją użytkowników
@@ -250,7 +250,8 @@ Aplikacja webowa z retro designem przypominającym jednorazowy aparat, która um
 2. Otwarcie linku w przeglądarce mobilnej (Vue SPA)
 3. Kliknięcie przycisku upload/wybór zdjęcia
 4. Przy pierwszym zdjęciu: podanie swojego imienia w formularzu
-5. Automatyczne przetworzenie po stronie klienta (crop 4:3, kompresja)
+5. Automatyczne przetworzenie po stronie klienta (crop 3:4, kompresja)
+5. Automatyczne przetworzenie po stronie klienta (crop 3:4, kompresja)
 6. Przesłanie przetworzonego zdjęcia do serwera wraz z danymi gościa
 7. Otrzymanie potwierdzenia
 

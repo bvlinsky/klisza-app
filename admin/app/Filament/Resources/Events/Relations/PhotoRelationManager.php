@@ -37,8 +37,7 @@ class PhotoRelationManager extends RelationManager
                     ]),
 
                 Tables\Columns\TextColumn::make('guest.name')
-                    ->label('Autor')
-                    ->searchable(),
+                    ->label('Autor'),
             ])
             ->paginated([12, 24, 48, 'all'])
             ->defaultPaginationPageOption(24)

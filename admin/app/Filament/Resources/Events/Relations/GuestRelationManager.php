@@ -17,8 +17,7 @@ class GuestRelationManager extends RelationManager
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Imię gościa')
-                    ->searchable(),
+                    ->label('Imię gościa'),
 
                 Tables\Columns\TextColumn::make('photos_count')
                     ->label('Przesłane zdjęcia')

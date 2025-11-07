@@ -3,14 +3,10 @@
 namespace App\Filament\Resources\Events\Tables;
 
 use App\Filament\Resources\Events\EventResource;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 
 class EventsTable
@@ -21,7 +17,6 @@ class EventsTable
             ->columns([
                 TextColumn::make('name')
                     ->label('Nazwa wydarzenia')
-                    ->searchable()
                     ->sortable(),
 
                 TextColumn::make('date')
@@ -59,32 +54,10 @@ class EventsTable
                     ->sortable(),
 
             ])
-            ->filters([
-                TernaryFilter::make('gallery_published')
-                    ->label('Galeria opublikowana'),
-
-                SelectFilter::make('upload_status')
-                    ->label('Status przesyłania')
-                    ->options([
-                        'upcoming' => 'Nadchodzące',
-                        'open' => 'Otwarte',
-                        'closed' => 'Zamknięte',
-                    ])
-                    ->query(function ($query, $data) {
-                        return $query->when($data['value'] === 'open', fn ($q) => $q->whereRaw('NOW() BETWEEN DATE_SUB(date, INTERVAL 12 HOUR) AND DATE_ADD(date, INTERVAL 12 HOUR)'))
-                            ->when($data['value'] === 'upcoming', fn ($q) => $q->where('date', '>', now()))
-                            ->when($data['value'] === 'closed', fn ($q) => $q->where('date', '<=', now()->subHours(12)));
-                    }),
-            ])
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
             ] + EventResource::getRecordActions())
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
-            ])
             ->defaultSort('date', 'desc');
     }
 }

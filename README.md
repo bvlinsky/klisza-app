@@ -21,7 +21,7 @@ Projekt składa się z dwóch głównych komponentów:
 - **Funkcjonalności:**
   - Przesyłanie zdjęć przez przeglądarkę mobilną (bez instalacji aplikacji)
   - Retro interface przypominający jednorazowy aparat
-  - Automatyczne przetwarzanie zdjęć (kadrowanie 4:3, kompresja)
+  - Automatyczne przetwarzanie zdjęć (kadrowanie 3:4, kompresja)
   - Limit 15 zdjęć na uczestnika w oknie czasowym wydarzenia ±12h
 
 ## Kluczowe cechy

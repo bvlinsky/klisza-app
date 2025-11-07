@@ -159,9 +159,13 @@ onMounted(async () => {
         uiStore.showWelcome()
       } else {
         console.log('Token found, loading auth data and skipping modal')
+        // Load persisted quota for this event if available
+        const storedQuota = localStorage.getItem(`analog_snap_quota_${eventId}`)
+        const persistedQuota = storedQuota ? parseInt(storedQuota, 10) : 15
+
         eventStore.setAuthData({
           access_token: storedToken,
-          quota_remaining: 15 // This should be fetched from API, but for now use default
+          quota_remaining: Number.isNaN(persistedQuota) ? 15 : persistedQuota
         })
       }
     }

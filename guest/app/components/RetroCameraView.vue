@@ -275,7 +275,7 @@ const compressPhoto = async (photoBlob: Blob): Promise<Blob> => {
 
       // Calculate new dimensions (max 1920px width, maintain aspect ratio)
       const maxWidth = 1920
-      const maxHeight = 1080
+      const maxHeight = 2560
       let { width, height } = img
 
       if (width > maxWidth) {

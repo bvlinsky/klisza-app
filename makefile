@@ -11,6 +11,10 @@ update:
 	docker compose exec admin composer update
 	docker compose exec guest bun update
 
+test:
+	docker compose exec admin php artisan test
+	docker compose exec guest bun test
+
 migrate:
 	docker compose exec admin php artisan migrate
 
