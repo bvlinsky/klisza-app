@@ -20,6 +20,11 @@ class EventInfolist
                     ->label('Data wydarzenia')
                     ->date('d.m.Y'),
 
+                TextEntry::make('frontend_link')
+                    ->label('Link do wydarzenia')
+                    ->state(fn ($record) => rtrim(config('app.frontend_url'), '/').'/event/'.$record->id)
+                    ->copyable(),
+
                 TextEntry::make('gallery_published')
                     ->label('Galeria opublikowana')
                     ->badge()

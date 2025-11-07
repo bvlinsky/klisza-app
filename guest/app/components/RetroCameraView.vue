@@ -52,7 +52,7 @@
           <!-- Center crosshair -->
           <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
             <div class="w-1 h-8 bg-amber-400/40 mx-auto"></div>
-            <div class="w-8 h-1 bg-amber-400/40 -mt-4"></div>
+            <div class="w-8 h-1 bg-amber-400/40 -mt-4.5"></div>
           </div>
 
           <!-- Film grain effect -->
@@ -292,7 +292,7 @@ const compressPhoto = async (photoBlob: Blob): Promise<Blob> => {
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')
 
-    img.onload = () => {
+    img.onload = async () => {
       if (!ctx) {
         resolve(photoBlob) // Return original if compression fails
         return
@@ -318,6 +318,66 @@ const compressPhoto = async (photoBlob: Blob): Promise<Blob> => {
 
       // Draw and compress
       ctx.drawImage(img, 0, 0, width, height)
+
+      // Add analog-style date stamp in orange at bottom-right
+      const now = new Date()
+      const yy = String(now.getFullYear()).slice(-2)
+      const dateStr = `${now.getDate()} ${now.getMonth()} \`${yy}`
+
+      const fontSize = Math.round(width * 0.04) // ~4% of width
+      const margin = Math.round(width * 0.05)    // ~5% margin
+
+      ctx.save()
+      // Preload SevenSegment font before drawing, if supported
+      try {
+        if (document && (document as any).fonts?.load) {
+          await (document as any).fonts.load(`normal ${fontSize}px "SevenSegment"`)
+        }
+        if (document && (document as any).fonts?.ready) {
+          await (document as any).fonts.ready
+        }
+      } catch (_) {
+        // Non-fatal: fall back to monospace if font fails to load
+      }
+
+      ctx.font = `normal ${fontSize}px "SevenSegment", monospace`
+      ctx.textAlign = 'right'
+      ctx.textBaseline = 'bottom'
+
+      // Analog luminous orange date: layered glow passes to match vintage imprint
+      const x = width - margin
+      const y = height - margin
+      ctx.globalCompositeOperation = 'lighter'
+      ctx.lineJoin = 'round'
+
+      // Far glow (soft, wide)
+      ctx.shadowColor = 'rgba(255, 120, 0, 0.45)'
+      ctx.shadowBlur = Math.round(fontSize * 0.45)
+      ctx.fillStyle = 'rgba(255, 120, 0, 0.12)'
+      ctx.fillText(dateStr, x, y)
+
+      // Mid glow (stronger, tighter)
+      ctx.shadowColor = 'rgba(255, 160, 0, 0.45)'
+      ctx.shadowBlur = Math.round(fontSize * 0.22)
+      ctx.fillStyle = 'rgba(255, 160, 0, 0.24)'
+      ctx.fillText(dateStr, x, y)
+
+      // Edge highlight ring
+      ctx.shadowColor = 'rgba(255, 170, 0, 0.35)'
+      ctx.shadowBlur = Math.round(fontSize * 0.10)
+      ctx.strokeStyle = 'rgba(255, 170, 0, 0.75)'
+      ctx.lineWidth = Math.max(2, Math.round(fontSize * 0.08))
+      ctx.strokeText(dateStr, x, y)
+
+      // Core hot amber
+      ctx.shadowColor = 'rgba(255, 200, 110, 0.45)'
+      ctx.shadowBlur = Math.round(fontSize * 0.06)
+      ctx.fillStyle = 'rgba(255, 200, 110, 0.88)'
+      ctx.fillText(dateStr, x, y)
+
+      // Reset blend
+      ctx.globalCompositeOperation = 'source-over'
+      ctx.restore()
 
       canvas.toBlob(
         (compressedBlob) => {

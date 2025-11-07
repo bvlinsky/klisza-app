@@ -1,2 +1,11 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
+
+/* Register SevenSegment font for date imprint */
+@font-face {
+  font-family: 'SevenSegment';
+  src: url('../fonts/7segment.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
