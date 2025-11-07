@@ -1,0 +1,64 @@
+on:
+  push:
+    branches: [main]
+name: Main
+jobs:
+
+  guest-test:
+    name: "[Guest] Test"
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v5
+    - name: Setup Bun
+      uses: oven-sh/setup-bun@v2
+      with:
+        bun-version: 1.2
+    - name: Install Dependencies
+      run: bun install
+    - name: Test
+      run: bun test
+
+  admin-test:
+    name: "[Admin] Test"
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.4
+          tools: composer:v2
+      - name: Install Dependencies
+        run: composer install --no-interaction --prefer-dist
+      - name: Prepare DB
+        run: touch ./database/database.sqlite && php artisan migrate --force
+      - name: Test
+        run: ./vendor/bin/pest
+
+  admin-deploy:
+    needs: [admin-test]
+    name: "[Admin] Deploy"
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    permissions:
+      deployments: write
+    steps:
+    - name: Deploy
+      uses: appleboy/ssh-action@v1
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          cd ${{ secrets.SSH_DEPLOY_DIR }}
+          php84 admin/artisan down
+          git pull
+          php84 ~/composer/composer i --no-dev --no-interaction --prefer-dist --optimize-autoloader
+          php84 admin/artisan optimize
+          php84 admin/artisan migrate --force
+          php84 admin/artisan filament:optimize
+          php84 admin/artisan up
