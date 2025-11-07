@@ -4,6 +4,9 @@ up:
 down:
 	docker compose down
 
+restart:
+	docker compose restart
+
 bash:
 	docker compose exec admin bash
 

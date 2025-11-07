@@ -78,17 +78,13 @@ const handleNameSubmit = async (name: string) => {
   }
 }
 
-const handleCapture = async (photoBlob: Blob) => {
+const handleCapture = async (photoBlob: Blob, takenAt: string) => {
   uiStore.setUploading(true)
 
   try {
-    // Format date for backend (YYYY-MM-DD HH:mm:ss)
-    const now = new Date()
-    const formattedDate = now.toISOString().slice(0, 19).replace('T', ' ')
+    console.log('Upload photo:', { eventId, fileSize: photoBlob.size, takenAt })
 
-    console.log('Upload photo:', { eventId, fileSize: photoBlob.size, takenAt: formattedDate })
-
-    const response = await api.uploadPhoto(eventId, photoBlob, formattedDate)
+    const response = await api.uploadPhoto(eventId, photoBlob, takenAt)
 
     if (response.error) {
       // Handle upload errors

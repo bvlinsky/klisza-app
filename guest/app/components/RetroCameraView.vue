@@ -167,7 +167,7 @@ interface Props {
 }
 
 interface Emits {
-  (e: 'capture', blob: Blob): void
+  (e: 'capture', blob: Blob, takenAt: string): void
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -212,10 +212,12 @@ const handleCapture = async () => {
 
   try {
     const photoBlob = await capturePhoto()
-    const compressedBlob = await compressPhoto(photoBlob)
+    const now = new Date()
+    const compressedBlob = await compressPhoto(photoBlob, now)
 
-    // Emit capture event with compressed photo
-    emit('capture', compressedBlob)
+    // Emit capture event with string timestamp for API (YYYY-MM-DD HH:mm:ss)
+    const takenAtStr = now.toISOString().slice(0, 19).replace('T', ' ')
+    emit('capture', compressedBlob, takenAtStr)
   } catch (error) {
     console.error('Photo capture error:', error)
     showError('Nie udało się zrobić zdjęcia. Spróbuj ponownie.')
@@ -286,7 +288,7 @@ const capturePhoto = (): Promise<Blob> => {
   })
 }
 
-const compressPhoto = async (photoBlob: Blob): Promise<Blob> => {
+const compressPhoto = async (photoBlob: Blob, takenAt: Date): Promise<Blob> => {
   return new Promise((resolve) => {
     const img = new Image()
     const canvas = document.createElement('canvas')
@@ -319,13 +321,24 @@ const compressPhoto = async (photoBlob: Blob): Promise<Blob> => {
       // Draw and compress
       ctx.drawImage(img, 0, 0, width, height)
 
-      // Add analog-style date stamp in orange at bottom-right
-      const now = new Date()
-      const yy = String(now.getFullYear()).slice(-2)
-      const dateStr = `${now.getDate()} ${now.getMonth()} \`${yy}`
+      // Format stamp as: D M YY HH:mm in Europe/Warsaw time (compact)
+      const fmt = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Europe/Warsaw',
+        year: '2-digit',
+        month: 'numeric',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+      })
+      const formatted = fmt.format(takenAt)
+      const nums = formatted.match(/\d+/g) ?? []
+      const dateStr = nums.length >= 5
+        ? `${+nums[0]} ${+nums[1]} ${nums[2]}  ${nums[3]}:${nums[4]}`
+        : formatted.replace(',', '')
 
-      const fontSize = Math.round(width * 0.04) // ~4% of width
-      const margin = Math.round(width * 0.05)    // ~5% margin
+      const fontSize = Math.round(width * 0.035)
+      const margin = Math.round(width * 0.05)
 
       ctx.save()
       // Preload SevenSegment font before drawing, if supported
@@ -350,29 +363,29 @@ const compressPhoto = async (photoBlob: Blob): Promise<Blob> => {
       ctx.globalCompositeOperation = 'lighter'
       ctx.lineJoin = 'round'
 
-      // Far glow (soft, wide)
-      ctx.shadowColor = 'rgba(255, 120, 0, 0.45)'
+      // Far glow (soft, wide) — slightly more orange
+      ctx.shadowColor = 'rgba(255, 112, 0, 0.45)'
       ctx.shadowBlur = Math.round(fontSize * 0.45)
-      ctx.fillStyle = 'rgba(255, 120, 0, 0.12)'
+      ctx.fillStyle = 'rgba(255, 112, 0, 0.12)'
       ctx.fillText(dateStr, x, y)
 
-      // Mid glow (stronger, tighter)
-      ctx.shadowColor = 'rgba(255, 160, 0, 0.45)'
+      // Mid glow (stronger, tighter) — slightly more orange
+      ctx.shadowColor = 'rgba(255, 150, 0, 0.45)'
       ctx.shadowBlur = Math.round(fontSize * 0.22)
-      ctx.fillStyle = 'rgba(255, 160, 0, 0.24)'
+      ctx.fillStyle = 'rgba(255, 150, 0, 0.24)'
       ctx.fillText(dateStr, x, y)
 
-      // Edge highlight ring
-      ctx.shadowColor = 'rgba(255, 170, 0, 0.35)'
+      // Edge highlight ring — slightly more orange
+      ctx.shadowColor = 'rgba(255, 160, 0, 0.35)'
       ctx.shadowBlur = Math.round(fontSize * 0.10)
-      ctx.strokeStyle = 'rgba(255, 170, 0, 0.75)'
+      ctx.strokeStyle = 'rgba(255, 160, 0, 0.75)'
       ctx.lineWidth = Math.max(2, Math.round(fontSize * 0.08))
       ctx.strokeText(dateStr, x, y)
 
-      // Core hot amber
-      ctx.shadowColor = 'rgba(255, 200, 110, 0.45)'
+      // Core hot amber — slightly more orange
+      ctx.shadowColor = 'rgba(255, 190, 100, 0.45)'
       ctx.shadowBlur = Math.round(fontSize * 0.06)
-      ctx.fillStyle = 'rgba(255, 200, 110, 0.88)'
+      ctx.fillStyle = 'rgba(255, 190, 100, 0.88)'
       ctx.fillText(dateStr, x, y)
 
       // Reset blend
