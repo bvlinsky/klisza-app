@@ -1,12 +1,12 @@
 # Product Requirements Document (PRD)
-## AnalogSnap - Aplikacja do zbierania zdjęć z wesel
+## klisza.app - Aplikacja do zbierania zdjęć z wesel
 
 ---
 
 ## 1. Przegląd produktu
 
 ### 1.1 Cel produktu
-AnalogSnap to aplikacja webowa pozwalająca parom młodym (organizatorom wesel) zbierać zdjęcia od gości w łatwy i nostalgiczny sposób. Aplikacja ma zachęcać do dokumentowania wydarzeń weselnych, tworząc wspólną galerię zdjęć jako pamiątkę z uroczystości.
+klisza.app to aplikacja webowa pozwalająca parom młodym (organizatorom wesel) zbierać zdjęcia od gości w łatwy i nostalgiczny sposób. Aplikacja ma zachęcać do dokumentowania wydarzeń weselnych, tworząc wspólną galerię zdjęć jako pamiątkę z uroczystości.
 
 ### 1.2 Problem użytkownika
 Pary młode chcą mieć fajne, autentyczne zdjęcia z wesela wykonane przez gości, które uchwycą różnorodne perspektywy i momenty wydarzenia. Tradycyjne metody zbierania zdjęć (social media, WhatsApp, email) są rozproszone i trudne w zarządzaniu.

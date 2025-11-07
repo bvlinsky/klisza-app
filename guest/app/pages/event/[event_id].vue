@@ -53,12 +53,14 @@ const handleNameSubmit = async (name: string) => {
 
     if (response.error) {
       // Handle API errors
-      if (response.error.status === 422 && response.error.content?.errors) {
+      const status = response.response.status
+      const errorBody = response.error as { message?: string; errors?: Record<string, string[]> } | undefined
+      if (status === 422 && errorBody?.errors) {
         // Validation errors
-        authValidationErrors.value = response.error.content.errors
+        authValidationErrors.value = errorBody.errors
       } else {
         // Other errors - show toast
-        console.error('Authentication error:', response.error)
+        console.error('Authentication error:', { status, error: response.error })
         showError('Nie udało się zalogować. Spróbuj ponownie.')
       }
       return
@@ -91,25 +93,27 @@ const handleCapture = async (photoBlob: Blob) => {
 
     if (response.error) {
       // Handle upload errors
-      if (response.error.status === 401) {
+      const status = response.response.status
+      if (status === 401) {
         // Token expired - clear auth and show name modal
         eventStore.clearAuth()
         uiStore.showNameInput()
         showWarning('Sesja wygasła. Zaloguj się ponownie.')
-      } else if (response.error.status === 403) {
+      } else if (status === 403) {
         // Upload window closed
         console.error('Upload window closed')
         showError('Okno na wysyłanie zdjęć zostało zamknięte przez organizatora.')
-      } else if (response.error.status === 422) {
+      } else if (status === 422) {
         // Validation error
-        console.error('Upload validation error:', response.error.content?.errors)
+        const errorBody = response.error as { message?: string; errors?: Record<string, string[]> } | undefined
+        console.error('Upload validation error:', errorBody?.errors)
         showError('Zdjęcie nie spełnia wymagań. Spróbuj zrobić inne zdjęcie.')
-      } else if (response.error.status === 429) {
+      } else if (status === 429) {
         // Quota exceeded
         console.error('Upload quota exceeded')
         showError('Osiągnięto limit zdjęć na dzisiaj.')
       } else {
-        console.error('Upload error:', response.error)
+        console.error('Upload error:', { status, error: response.error })
         showError('Nie udało się wysłać zdjęcia. Spróbuj ponownie.')
       }
       return
@@ -135,13 +139,14 @@ onMounted(async () => {
 
     if (response.error) {
       // Handle API errors
-      if (response.error.status === 404) {
+      const status = response.response.status
+      if (status === 404) {
         // Event not found
         console.error('Event not found:', eventId)
         showError('Wydarzenie nie zostało znalezione.')
         // TODO: Redirect to not found page
       } else {
-        console.error('Error fetching event:', response.error)
+        console.error('Error fetching event:', { status, error: response.error })
         showError('Nie udało się pobrać danych wydarzenia. Odśwież stronę.')
       }
       return
@@ -177,7 +182,7 @@ onMounted(async () => {
 
 // Head
 useHead({
-  title: eventStore.event?.name || 'Analog Snap',
+  title: eventStore.event?.name || 'klisza.app',
   meta: [
     { name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' },
     { name: 'theme-color', content: '#000000' },

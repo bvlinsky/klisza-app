@@ -1,6 +1,6 @@
-# AnalogSnap
+# klisza.app
 
-AnalogSnap to aplikacja webowa pozwalająca parom młodym zbierać zdjęcia od gości weselnych w łatwy i nostalgiczny sposób. Aplikacja wykorzystuje retro design inspirowany jednorazowymi aparatami fotograficznymi, tworząc wspólną galerię zdjęć jako pamiątkę z uroczystości.
+klisza.app to aplikacja webowa pozwalająca parom młodym zbierać zdjęcia od gości weselnych w łatwy i nostalgiczny sposób. Aplikacja wykorzystuje retro design inspirowany jednorazowymi aparatami fotograficznymi, tworząc wspólną galerię zdjęć jako pamiątkę z uroczystości.
 
 ## Architektura
 

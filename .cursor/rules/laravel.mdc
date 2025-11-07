@@ -2,7 +2,7 @@
 globs: admin/**/*.*
 alwaysApply: false
 ---
-# AI Rules for Analog Snap API
+# AI Rules for klisza.app API
 Headless api with admin panel in filament
 
 ## Tech Stack

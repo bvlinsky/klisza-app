@@ -1,7 +1,7 @@
-# Aplikacja - AnalogSnap (MVP)
+# Aplikacja - klisza.app (MVP)
 
 ### Główny problem
-AnalogSnap pozwala uczestnikom imprez robić zdjęcia i przesyłać je do organizatora. Aplikacja ma zachęcać do dokumentowania wydarzeń, tak aby organizator i uczestnicy mieli pamiątkę.
+klisza.app pozwala uczestnikom imprez robić zdjęcia i przesyłać je do organizatora. Aplikacja ma zachęcać do dokumentowania wydarzeń, tak aby organizator i uczestnicy mieli pamiątkę.
 
 ### Najmniejszy zestaw funkcjonalności
 - Tworzenie wydarzenia przez organizatora z nazwą i datą

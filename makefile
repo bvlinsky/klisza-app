@@ -27,5 +27,7 @@ format:
 	docker compose exec admin vendor/bin/pint
 
 pre-commit:
+	make update
 	make types
 	make format
+	make test

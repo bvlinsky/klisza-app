@@ -2,7 +2,7 @@
 globs: guest/**/*.*
 alwaysApply: false
 ---
-# AI Rules for Analog Snap
+# AI Rules for klisza.app
 SPA app for guests
 
 ## Tech Stack

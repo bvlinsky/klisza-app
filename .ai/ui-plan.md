@@ -1,4 +1,4 @@
-# Architektura UI dla AnalogSnap
+# Architektura UI dla klisza.app
 
 ## Konfiguracja środowiska
 
