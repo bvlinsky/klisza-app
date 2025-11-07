@@ -37,7 +37,7 @@ jobs:
       - name: Prepare DB
         run: touch admin/database/database.sqlite && php admin/artisan migrate --force
       - name: Test
-        run: php admin/artisan test
+        run: cd admin && ./vendor/bin/pest
 
   admin-deploy:
     needs: [admin-test]
