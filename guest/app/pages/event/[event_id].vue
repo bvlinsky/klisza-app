@@ -1,5 +1,6 @@
 <template>
   <div class="fixed inset-0 overflow-hidden bg-black">
+    <div class="mx-auto w-full max-w-sm h-full">
     <!-- Welcome Modal with name input - First time visit -->
     <WelcomeModal
       v-model="uiStore.showWelcomeModal"
@@ -17,18 +18,16 @@
       :is-uploading="uiStore.isUploading"
       @capture="handleCapture"
     />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
 import { useHead } from '#imports'
 import { useEventStore } from '~/stores/event'
 import { useUiStore } from '~/stores/ui'
 import { api } from '~/composables/useApi'
 import { useAppToast } from '~/composables/useToast'
-import WelcomeModal from '~/components/WelcomeModal.vue'
-import RetroCameraView from '~/components/RetroCameraView.vue'
 
 // Composables
 const route = useRoute()

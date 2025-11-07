@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed inset-0 bg-black flex flex-col">
+  <div class="bg-black flex flex-col w-full h-full">
 
     <!-- Camera Preview Area -->
     <div class="flex-1 relative bg-black overflow-hidden flex items-center justify-center">
@@ -231,6 +231,24 @@ const capturePhoto = (): Promise<Blob> => {
       return
     }
 
+    const srcW = videoRef.value.videoWidth
+    const srcH = videoRef.value.videoHeight
+    const targetRatio = 3 / 4
+    const srcRatio = srcW / srcH
+
+    let sx = 0
+    let sy = 0
+    let sWidth = srcW
+    let sHeight = srcH
+
+    if (srcRatio > targetRatio) {
+      sWidth = Math.round(srcH * targetRatio)
+      sx = Math.floor((srcW - sWidth) / 2)
+    } else if (srcRatio < targetRatio) {
+      sHeight = Math.round(srcW / targetRatio)
+      sy = Math.floor((srcH - sHeight) / 2)
+    }
+
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')
 
@@ -239,14 +257,21 @@ const capturePhoto = (): Promise<Blob> => {
       return
     }
 
-    // Set canvas size to video dimensions
-    canvas.width = videoRef.value.videoWidth
-    canvas.height = videoRef.value.videoHeight
+    canvas.width = sWidth
+    canvas.height = sHeight
 
-    // Draw video frame to canvas
-    ctx.drawImage(videoRef.value, 0, 0)
+    ctx.drawImage(
+      videoRef.value,
+      sx,
+      sy,
+      sWidth,
+      sHeight,
+      0,
+      0,
+      sWidth,
+      sHeight
+    )
 
-    // Convert to blob
     canvas.toBlob(
       (blob) => {
         if (blob) {
