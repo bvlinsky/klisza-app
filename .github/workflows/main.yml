@@ -16,9 +16,9 @@ jobs:
       with:
         bun-version: 1.2
     - name: Install Dependencies
-      run: bun install
+      run: cd guest && bun install
     - name: Test
-      run: bun test
+      run: cd guest && bun test
 
   admin-test:
     name: "[Admin] Test"
@@ -33,11 +33,11 @@ jobs:
           php-version: 8.4
           tools: composer:v2
       - name: Install Dependencies
-        run: composer install --no-interaction --prefer-dist
+        run: cd admin && composer install --no-interaction --prefer-dist
       - name: Prepare DB
-        run: touch ./database/database.sqlite && php artisan migrate --force
+        run: touch admin/database/database.sqlite && php admin/artisan migrate --force
       - name: Test
-        run: ./vendor/bin/pest
+        run: admin/vendor/bin/pest
 
   admin-deploy:
     needs: [admin-test]
