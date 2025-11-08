@@ -27,7 +27,11 @@ const items = computed<NavigationMenuItem[]>(() => [
     </template>
 
     <template #right>
-      <UNavigationMenu :items="items" />
+      <UNavigationMenu :items="items" class="hidden lg:flex" />
+    </template>
+
+    <template #body>
+      <UNavigationMenu :items="items" orientation="vertical" class="-mx-2.5" />
     </template>
   </UHeader>
 </template>
