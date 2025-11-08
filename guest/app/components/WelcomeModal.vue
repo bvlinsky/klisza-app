@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50" @click.self="emit('update:modelValue', false)">
+  <div v-if="isOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
     <div class="bg-white rounded-2xl shadow-xl max-w-lg w-full mx-4 max-h-[90vh] overflow-hidden" @click.stop>
       <!-- Retro Header -->
       <div class="bg-gradient-to-r from-amber-400 to-orange-500 px-6 py-6 text-center">

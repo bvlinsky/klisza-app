@@ -1,15 +1,7 @@
 <template>
-  <UModal
-    v-model="isOpen"
-    :ui="{ 
-      width: 'sm:max-w-md',
-      padding: 'p-0',
-      rounded: 'rounded-2xl',
-      background: 'bg-gradient-to-br from-amber-50 to-orange-50'
-    }"
-    :prevent-close="true"
-  >
-    <div class="relative overflow-hidden">
+  <!-- Inline container, normal div — not a modal -->
+  <div v-if="isOpen" class="mx-auto w-full max-w-md px-4">
+    <div class="relative overflow-hidden bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl shadow-xl w-full">
       <!-- Retro Header -->
       <div class="bg-gradient-to-r from-amber-400 to-orange-500 px-6 py-6 text-center">
         <div class="inline-block p-3 bg-white/20 rounded-full backdrop-blur-sm mb-3">
@@ -26,16 +18,14 @@
       <div class="px-6 py-8">
         <UForm :state="formState" @submit="handleSubmit" class="space-y-5">
           <div class="space-y-2">
-            <UFormGroup
-              :error="validationErrors.name?.[0]"
-            >
+            <UFormGroup :error="validationErrors.name?.[0]">
               <UInput
                 v-model="formData.name"
                 placeholder="Wpisz swoje imię..."
                 size="xl"
                 autofocus
                 :class="{ 'ring-red-500': validationErrors.name }"
-                class="text-center text-lg font-semibold"
+                class="text-center text-lg font-semibold w-full"
                 style="font-family: 'Courier New', monospace"
               />
               <template v-if="validationErrors.name?.[0]" #error>
@@ -50,7 +40,7 @@
                 </div>
               </template>
             </UFormGroup>
-            
+
             <p class="text-xs text-center text-gray-500">
               Twoje imię zostanie użyte do identyfikacji zdjęć
             </p>
@@ -80,7 +70,7 @@
       <div class="absolute top-0 right-0 w-24 h-24 bg-amber-400/10 rounded-full -translate-y-12 translate-x-12"></div>
       <div class="absolute bottom-0 left-0 w-20 h-20 bg-orange-400/10 rounded-full translate-y-10 -translate-x-10"></div>
     </div>
-  </UModal>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -95,7 +85,6 @@ interface Props {
 interface Emits {
   (e: 'update:modelValue', value: boolean): void
   (e: 'submit', name: string): void
-  (e: 'close'): void
 }
 
 const props = withDefaults(defineProps<Props>(), {
