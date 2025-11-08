@@ -33,7 +33,7 @@
 const steps = [
   {
     title: 'Zakładasz wydarzenie',
-    desc: 'Podajesz nazwę i datę wesela.',
+    desc: 'Podajesz nazwę i datę imprezy.',
     icon: '/images/step1.svg'
   },
   {
@@ -43,12 +43,12 @@ const steps = [
   },
   {
     title: 'Goście robią zdjęcia',
-    desc: 'Wpisują swoje imię i korzystają z retro aparatu.',
+    desc: 'Wpisują swoje imię i korzystają z aparatu.',
     icon: '/images/step3.svg'
   },
   {
     title: 'Powstaje wspólna galeria',
-    desc: 'Po weselu przeglądasz zebrane zdjęcia w jednym miejscu.',
+    desc: 'Po imprezie przeglądasz zebrane zdjęcia w jednym miejscu.',
     icon: '/images/step4.svg'
   }
 ]

@@ -14,6 +14,8 @@
     <!-- Jak to działa -->
     <HowItWorks />
 
+    <Pricing />
+
     <!-- Footer -->
     <footer class="px-6 py-10 border-t border-white/10 text-center text-white/60 text-sm">
       <p>© {{ new Date().getFullYear() }} klisza.app - wspólne wspomnienia w retro stylu.</p>

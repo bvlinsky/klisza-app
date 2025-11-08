@@ -9,6 +9,9 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL || 'http://localhost',
+      stripeOption1Url: process.env.NUXT_PUBLIC_STRIPE_OPTION1_URL || '',
+      stripeOption2Url: process.env.NUXT_PUBLIC_STRIPE_OPTION2_URL || '',
+      stripeOption3Url: process.env.NUXT_PUBLIC_STRIPE_OPTION3_URL || '',
     },
   },
   ui: {
