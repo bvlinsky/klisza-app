@@ -15,7 +15,7 @@
         >
           <UCard>
             <div :class="['flex items-center gap-5', i % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse']">
-              <img :src="step.icon" :alt="'Krok ' + (i+1)" class="w-28 h-28 shrink-0 object-contain" />
+              <UIcon :name="step.icon" class="w-28 h-28 shrink-0 object-contain" />
               <div class="space-y-2">
                 <p class="text-amber-400 font-medium tracking-wide text-sm">Krok {{ i + 1 }}</p>
                 <h3 class="text-lg font-semibold">{{ step.title }}</h3>
@@ -34,22 +34,22 @@ const steps = [
   {
     title: 'Zakładasz wydarzenie',
     desc: 'Podajesz nazwę i datę imprezy.',
-    icon: '/images/step1.svg'
+    icon: 'material-symbols-light:edit-calendar-rounded'
   },
   {
     title: 'Wysyłasz link do galerii',
     desc: 'Otrzymujesz prosty link, który możesz udostępnić gościom.',
-    icon: '/images/step2.svg'
+    icon: 'material-symbols-light:qr-code-2-rounded'
   },
   {
     title: 'Goście robią zdjęcia',
     desc: 'Wpisują swoje imię i korzystają z aparatu.',
-    icon: '/images/step3.svg'
+    icon: 'material-symbols-light:photo-camera-rounded'
   },
   {
     title: 'Powstaje wspólna galeria',
     desc: 'Po imprezie przeglądasz zebrane zdjęcia w jednym miejscu.',
-    icon: '/images/step4.svg'
+    icon: 'material-symbols-light:gallery-thumbnail-rounded'
   }
 ]
 </script>

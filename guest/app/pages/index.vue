@@ -1,5 +1,8 @@
 <template>
   <div class="min-h-screen">
+    <!-- Nav -->
+    <AppNav />
+
     <!-- Hero -->
     <UPageHero
       title="Aparat jednorazowy w telefonie Twoich gości"
@@ -15,6 +18,9 @@
     <HowItWorks />
 
     <Pricing />
+
+    <!-- FAQ -->
+    <FAQ />
 
     <!-- Footer -->
     <footer class="px-6 py-10 border-t border-white/10 text-center text-white/60 text-sm">
