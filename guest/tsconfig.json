@@ -1,6 +1,14 @@
 {
   // https://nuxt.com/docs/guide/concepts/typescript
+  "compilerOptions": {
+    "types": ["@types/node", "@playwright/test"],
+    "skipLibCheck": true
+  },
   "files": [],
+  "include": [
+    "e2e/**/*.ts",
+    "playwright.config.ts"
+  ],
   "references": [
     {
       "path": "./.nuxt/tsconfig.app.json"

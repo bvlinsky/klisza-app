@@ -1,7 +1,9 @@
 <template>
   <section id="faq" class="py-16 px-6">
     <div class="max-w-4xl mx-auto">
-      <h2 class="text-3xl font-bold text-center mb-12">Najczęściej zadawane pytania</h2>
+      <h2 class="text-3xl font-bold text-center mb-12">
+        Najczęściej zadawane pytania
+      </h2>
       
       <UAccordion
         :items="faqItems"
@@ -9,25 +11,10 @@
           item: {
             base: 'border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden mb-4'
           },
-          header: 'p-4 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors',
+          header: 'p-4 transition-colors',
           body: 'p-4 text-gray-600 dark:text-gray-300'
         }"
-      >
-        <template #default="{ item, open }">
-          <div class="flex items-center justify-between">
-            <span class="font-medium">{{ item.label }}</span>
-            <UIcon
-              name="i-heroicons-chevron-right"
-              class="w-5 h-5 transition-transform"
-              :class="[open && 'rotate-90']"
-            />
-          </div>
-        </template>
-        
-        <template #body="{ item }">
-          <p>{{ item.content }}</p>
-        </template>
-      </UAccordion>
+      />
     </div>
   </section>
 </template>

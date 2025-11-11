@@ -17,6 +17,7 @@ update:
 test:
 	docker compose exec admin php artisan test
 	docker compose exec guest bun test
+	docker compose exec guest bun test:e2e
 
 migrate:
 	docker compose exec admin php artisan migrate
