@@ -9,16 +9,6 @@ const items = computed<NavigationMenuItem[]>(() => [
     to: '/#jak-to-dziala',
     active: false
   },
-  {
-    label: 'Cennik',
-    to: '/#cennik',
-    active: false
-  },
-  {
-    label: 'FAQ',
-    to: '/#faq',
-    active: false
-  },
 ])
 </script>
 

@@ -12,7 +12,7 @@ Domyślnie ustawiony na `http://localhost:8000`. Dla produkcji użyj swojego rze
 
 ## 1. Przegląd struktury UI
 
-Architektura UI opiera się na dwóch głównych aplikacjach: aplikacji dla gości (wygląda jak aplikacja do robienia zdjęć na telefony, ale w retro stylu - jeden widok SPA w Nuxt/Vue z modalami powitalnymi i obszarem kamery) oraz panelu administracyjnego (Filament dla organizatorów z galerią). Struktura jest mobile-first, z naciskiem na płynność UX, bezpieczeństwo (Sanctum tokens w localStorage) i integrację z API. Używa Nuxt UI, Tailwind, Pinia dla stanu oraz open-api-fetch dla wywołań API, z toastami dla błędów.
+Architektura UI opiera się na dwóch głównych aplikacjach: aplikacji dla gości (wygląda jak aplikacja do robienia zdjęć na telefony, ale w retro stylu - jeden widok SPA w Nuxt/Vue z modalami powitalnymi i obszarem kamery) oraz panelu administracyjnego (Filament dla organizatorów do moderacji zdjęć i eksportu archiwum .zip). Struktura jest mobile-first, z naciskiem na płynność UX, bezpieczeństwo (Sanctum tokens w localStorage) i integrację z API. Używa Nuxt UI, Tailwind, Pinia dla stanu oraz open-api-fetch dla wywołań API, z toastami dla błędów.
 
 ## 2. Lista widoków
 
@@ -26,15 +26,15 @@ Architektura UI opiera się na dwóch głównych aplikacjach: aplikacji dla goś
 ### Panel administracyjny (Filament)
 - **Ścieżka widoku**: /admin (z podstronami dla wydarzeń)
 - **Główny cel**: Zarządzanie wydarzeniami i moderacja zdjęć przez organizatorów.
-- **Kluczowe informacje do wyświetlenia**: Lista wydarzeń z nazwą i datą, grid zdjęć z imieniem gościa, status publikacji galerii.
-- **Kluczowe komponenty widoku**: Tabela wydarzeń, grid zdjęć z paginacją, przyciski usuwania/publikacji.
+ - **Kluczowe informacje do wyświetlenia**: Lista wydarzeń z nazwą i datą, grid zdjęć z imieniem gościa.
+ - **Kluczowe komponenty widoku**: Tabela wydarzeń, grid zdjęć z paginacją, przyciski usuwania/eksportu archiwum .zip.
 - **UX, dostępność i względy bezpieczeństwa**: Funkcjonalny design Filament z paginacją i filtrowaniem; dostępność standardowa Filament; bezpieczeństwo poprzez autoryzację Laravel z walidacją hasła.
 
 ## 3. Mapa podróży użytkownika
 
 **Dla gości**: Otwórz link z event_id po raz pierwszy → Wyświetl modal powitalny z informacjami o weselu i działaniu aplikacji → Podaj imię w modalu (utwórz token przez POST/auth) → Modale znikają i przejdź do głównego widoku kamery (wygląda jak aplikacja do zdjęć na telefon, ale retro) → Zrób zdjęcie przyciskiem migawki → Kompresja klienta-side → Automatyczny upload w tle (POST/photos) → Toast potwierdzenia lub błędu → Kontynuuj robienie zdjęć do limitu (15 zdjęć).
 
-**Dla organizatorów**: Zaloguj do panelu Filament → Wybierz wydarzenie z listy → Przeglądaj grid zdjęć (sortowane chronologicznie) → Usuń nieodpowiednie zdjęcia → Opublikuj galerię (maksymalnie 3 kliknięcia).
+**Dla organizatorów**: Zaloguj do panelu Filament → Wybierz wydarzenie z listy → Przeglądaj grid zdjęć (sortowane chronologicznie) → Usuń nieodpowiednie zdjęcia → Pobierz zdjęcia (.zip) (maksymalnie 3 kliknięcia).
 
 Kluczowe interakcje: Płynne przełączanie modali przez stan Pinia; upload w tle; błędy obsługiwane toastami bez przerywania przepływu.
 
@@ -49,4 +49,4 @@ W panelu admina: Standardowa nawigacja Filament (menu boczne, breadcrumbs) międ
 - **Modal (Nuxt UI)**: Modal powitalny z informacjami o weselu i aplikacji (pierwsze wejście), modal imię do utworzenia tokenu; responsywny, z przyciskami pełnej szerokości na mobile.
 - **Toast (Nuxt UI)**: Globalny dla błędów API w obu aplikacjach; krótkie komunikaty polskie na dole ekranu, z mapowaniem kodów błędów.
 - **Retro interfejs kamery (custom)**: Wygląda jak aplikacja do robienia zdjęć na telefon, ale w retro stylu - przycisk migawki, ramka polaroid, ciepłe kolory dla nostalgii.
-- **Grid/table (Filament)**: Dla galerii w adminie i potencjalnego podglądu w gościach; paginacja 20-50 elementów.
+- **Grid/table (Filament)**: Dla moderacji zdjęć w panelu admin; paginacja 20-50 elementów.

@@ -6,7 +6,7 @@
 ## 1. Przegląd produktu
 
 ### 1.1 Cel produktu
-klisza.app to aplikacja webowa pozwalająca parom młodym (organizatorom wesel) zbierać zdjęcia od gości w łatwy i nostalgiczny sposób. Aplikacja ma zachęcać do dokumentowania wydarzeń weselnych, tworząc wspólną galerię zdjęć jako pamiątkę z uroczystości.
+klisza.app to aplikacja webowa pozwalająca parom młodym (organizatorom wesel) zbierać zdjęcia od gości w łatwy i nostalgiczny sposób. Aplikacja ma zachęcać do dokumentowania wydarzeń weselnych; po imprezie organizator może pobrać wszystkie zebrane zdjęcia jako pojedynczy plik .zip.
 
 ### 1.2 Problem użytkownika
 Pary młode chcą mieć fajne, autentyczne zdjęcia z wesela wykonane przez gości, które uchwycą różnorodne perspektywy i momenty wydarzenia. Tradycyjne metody zbierania zdjęć (social media, WhatsApp, email) są rozproszone i trudne w zarządzaniu.
@@ -32,7 +32,7 @@ Aplikacja webowa z retro designem przypominającym jednorazowy aparat, która um
 
 - **Zarządzanie wydarzeniami:**
   - Tworzenie wydarzenia z wymaganymi polami: nazwa i data
-  - Edycja nazwy i daty wydarzenia przed publikacją galerii
+  - Edycja nazwy i daty wydarzenia
   - Generowanie unikalnego linku dla gości
   - Usuwanie wydarzenia
 
@@ -42,12 +42,11 @@ Aplikacja webowa z retro designem przypominającym jednorazowy aparat, która um
   - Paginacja (20-50 zdjęć na stronę)
   - Sortowanie chronologiczne (od najnowszych)
   - Podgląd pełnego rozmiaru po kliknięciu
-  - Możliwość usuwania zdjęć przed publikacją
+  - Możliwość usuwania zdjęć przed eksportem
 
-- **Publikacja galerii:**
-  - Przycisk "Opublikuj galerię" (maksymalnie 3 kliknięcia)
-  - Generowanie linku do galerii dla gości
-  - Blokada edycji wydarzenia po publikacji
+- **Eksport zdjęć (.zip):**
+  - Przycisk "Pobierz zdjęcia (.zip)" (maksymalnie 3 kliknięcia)
+  - Archiwum zawiera wyłącznie zatwierdzone zdjęcia
 
 
 #### 2.1.2 Aplikacja dla gości (tylko mobile web)
@@ -77,11 +76,8 @@ Aplikacja webowa z retro designem przypominającym jednorazowy aparat, która um
   - Jasne komunikaty o statusie: "Wydarzenie jeszcze się nie rozpoczęło" lub "Wydarzenie już się zakończyło"
 
 
-#### 2.1.3 Galeria dla gości (po publikacji)
-- Dostęp przez unikalny link udostępniony przez organizatora
-- Wyświetlanie tylko zdjęć zatwierdzonych przez organizatora
-- Responsywny grid zdjęć
-- Pełnoekranowy podgląd
+#### 2.1.3 Eksport zdjęć po imprezie
+- Organizator pobiera wszystkie zatwierdzone zdjęcia jako plik .zip
 
 ### 2.2 Funkcjonalności POZA zakresem MVP
 - Weryfikacja email przy rejestracji
@@ -94,7 +90,7 @@ Aplikacja webowa z retro designem przypominającym jednorazowy aparat, która um
 - Wsparcie techniczne i moderacja treści
 - Wykrywanie duplikatów zdjęć
 - Miniaturki zdjęć (optymalizacja)
-- Personalizacja designu galerii
+- Personalizacja panelu zdjęć w adminie
 - Edycja zdjęć, filtry
 - Tagowanie, komentowanie zdjęć
 - Integracje z kalendarzami lub platformami ślubny
@@ -176,7 +172,7 @@ Aplikacja webowa z retro designem przypominającym jednorazowy aparat, która um
 
 ### 3.6 Wymagania wydajnościowe
 - Kompresja zdjęć przed wysłaniem (po stronie klienta)
-- Paginacja dla dużych galerii
+- Paginacja dla dużych zestawów zdjęć
 - Protected routes z cache
 
 ---
@@ -205,7 +201,7 @@ Aplikacja webowa z retro designem przypominającym jednorazowy aparat, która um
 #### US2: Moderacja zdjęć
 **Jako** para młoda  
 **Chcę** przeglądać i usuwać zdjęcia  
-**Aby** galeria zawierała tylko odpowiednie treści
+**Aby** zestaw zdjęć do pobrania zawierał tylko odpowiednie treści
 
 **Kroki:**
 1. Zalogowanie do panelu
@@ -221,22 +217,22 @@ Aplikacja webowa z retro designem przypominającym jednorazowy aparat, która um
 - Podgląd pełnego rozmiaru działa
 - Usunięcie jest natychmiastowe
 
-#### US3: Publikacja galerii
+#### US3: Pobranie zdjęć (.zip)
 **Jako** para młoda  
-**Chcę** opublikować galerię po weselu  
-**Aby** goście mogli zobaczyć wszystkie zdjęcia
+**Chcę** pobrać wszystkie zatwierdzone zdjęcia po weselu jako archiwum  
+**Aby** móc je dalej udostępnić poza aplikacją
 
 **Kroki:**
 1. Zalogowanie do panelu
 2. Wybranie wydarzenia
-3. Sprawdzenie wszystkich zdjęć
-4. Kliknięcie "Opublikuj galerię"
-5. Udostępnienie linku gościom
+3. Sprawdzenie i ewentualna moderacja zdjęć
+4. Kliknięcie "Pobierz zdjęcia (.zip)"
+5. Pobranie archiwum na urządzenie
 
 **Kryteria akceptacji:**
-- Publikacja w maksymalnie 3 kliknięciach
-- Link do galerii jest unikalny
-- Po publikacji nie można edytować nazwy/daty wydarzenia
+- Pobranie w maksymalnie 3 kliknięciach
+- Archiwum zawiera tylko zatwierdzone zdjęcia
+- Format pliku .zip
 
 ### 4.2 Gość weselny
 
@@ -295,21 +291,6 @@ Aplikacja webowa z retro designem przypominającym jednorazowy aparat, która um
 - Licznik pokazuje ile zdjęć zostało przesłanych
 - Brak możliwości obejścia limitu
 
-#### US7: Przeglądanie galerii
-**Jako** gość weselny  
-**Chcę** zobaczyć wszystkie zdjęcia z wesela  
-**Gdy** para młoda opublikuje galerię
-
-**Kroki:**
-1. Otrzymanie linku do galerii od pary młodej
-2. Otwarcie linku w przeglądarce
-3. Przeglądanie zdjęć w grid
-4. Kliknięcie na zdjęcie dla pełnego widoku
-
-**Kryteria akceptacji:**
-- Responsywny grid na mobile
-- Pełnoekranowy podgląd działa
-- Tylko zatwierdzone zdjęcia są widoczne
 
 ---
 
@@ -374,5 +355,4 @@ Aplikacja webowa z retro designem przypominającym jednorazowy aparat, która um
 GET  /event/{event_id}              → Strona uploadu dla gości (Vue SPA)
 POST /event/{event_id}/guest        → Utworzenie gościa po imieniu i pobranie session_id
 POST /event/{event_id}/upload       → Upload zdjęcia (walidacja: limit, czas, guest_id)
-GET  /gallery/{event_id}            → Galeria opublikowanych zdjęć
 ```

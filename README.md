@@ -1,6 +1,6 @@
 # klisza.app
 
-klisza.app to aplikacja webowa pozwalająca parom młodym zbierać zdjęcia od gości weselnych w łatwy i nostalgiczny sposób. Aplikacja wykorzystuje retro design inspirowany jednorazowymi aparatami fotograficznymi, tworząc wspólną galerię zdjęć jako pamiątkę z uroczystości.
+klisza.app to aplikacja webowa pozwalająca parom młodym zbierać zdjęcia od gości weselnych w łatwy i nostalgiczny sposób. Aplikacja wykorzystuje retro design inspirowany jednorazowymi aparatami fotograficznymi; po imprezie wszystkie zebrane zdjęcia można pobrać jako pojedynczy plik .zip.
 
 ## Architektura
 
@@ -12,7 +12,7 @@ Projekt składa się z dwóch głównych komponentów:
 - **Funkcjonalności:**
   - Tworzenie i zarządzanie wydarzeniami weselnymi
   - Moderacja przesłanych zdjęć
-  - Publikacja galerii dla gości
+  - Eksport zdjęć po wydarzeniu jako plik .zip
   - API dla aplikacji gości (endpointy do uploadu zdjęć i zarządzania sesjami)
 
 ### Aplikacja dla gości (guest/)

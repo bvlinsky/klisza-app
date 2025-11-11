@@ -37,8 +37,8 @@ const steps = [
     icon: 'material-symbols-light:edit-calendar-rounded'
   },
   {
-    title: 'Wysyłasz link do galerii',
-    desc: 'Otrzymujesz prosty link, który możesz udostępnić gościom.',
+    title: 'Wysyłasz link do aparatu',
+    desc: 'Otrzymujesz link lub kod qr, który możesz udostępnić gościom.',
     icon: 'material-symbols-light:qr-code-2-rounded'
   },
   {

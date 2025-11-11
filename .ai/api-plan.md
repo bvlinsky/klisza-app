@@ -16,8 +16,7 @@
 {
   "id": "uuid",
   "name": "Anna & Piotr",
-  "date": "2025-06-14T14:00:00Z",
-  "gallery_published": true
+  "date": "2025-06-14T14:00:00Z"
 }
 ```
 
@@ -61,7 +60,7 @@
 - Authentication is required for photo uploads; event metadata is publicly accessible.
 
 ## 4. Validation and Business Logic
-- **Events**: validate `event_id` as UUID. Responses include computed upload window (`date ± 12h`). An unpublished event (`gallery_published = false`) can still accept uploads while the window is active.
+- **Events**: validate `event_id` as UUID. Responses include computed upload window (`date ± 12h`).
 - **Guest Sessions**: `name` required (2–50 chars, allow Polish characters). The client must reuse the issued session token after creation.
 - **Photos**: enforce server-side validations matching client processing rules—JPEG only, ≤10 MB, resolution max 2560×1920. Generate storage filename with UUID v6. `taken_at` must be within event window ±24h. Limit uploads to 15 active photos per session.
-- **Security & Performance**: Use eager loading to avoid N+1 queries when deriving quota. Ensure UUID-based filenames keep gallery URLs unguessable.
+- **Security & Performance**: Use eager loading to avoid N+1 queries when deriving quota. Ensure UUID-based filenames keep direct file URLs hard to guess. Dodaj endpoint eksportu .zip dostępny tylko dla organizatora.

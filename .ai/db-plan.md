@@ -9,11 +9,10 @@ updated_at
 
 ### Tabela: events
 ```
-id (UUID primary key, used for guest and gallery URLs)
+id (UUID primary key, used for guest app URL)
 user_id (UUID foreign key → users)
 name (string, required)
 date (datetime, required)
-gallery_published (boolean, default false)
 created_at
 updated_at
 ```

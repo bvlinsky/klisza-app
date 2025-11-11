@@ -24,6 +24,7 @@ services:
       PHP_EXTENSION_INTL: 1
       PHP_EXTENSION_PDO_SQLITE: 1
       PHP_EXTENSION_GD: 1
+      PHP_EXTENSION_IMAGICK: 1
 
 volumes:
   guest_node_modules:

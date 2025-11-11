@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\Events\Tables;
 
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -29,14 +28,6 @@ class EventsTable
                     default => 'gray',
                 })
                 ->getStateUsing(fn ($record) => $record->isUploadWindowOpen() ? 'Otwarte' : 'Zamknięte'),
-
-            IconColumn::make('gallery_published')
-                ->label('Galeria opublikowana')
-                ->boolean()
-                ->trueIcon('heroicon-o-check-circle')
-                ->falseIcon('heroicon-o-x-circle')
-                ->trueColor('success')
-                ->falseColor('gray'),
 
             TextColumn::make('guests_count')
                 ->label('Goście')
