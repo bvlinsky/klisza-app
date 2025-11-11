@@ -57,8 +57,9 @@ jobs:
           cd ${{ secrets.SSH_DEPLOY_DIR }}
           php84 admin/artisan down
           git pull
-          cd admin && php84 ~/composer/composer i --no-dev --no-interaction --prefer-dist --optimize-autoloader
-          php84 admin/artisan optimize
-          php84 admin/artisan migrate --force
-          php84 admin/artisan filament:optimize
-          php84 admin/artisan up
+          cd admin
+          php84 ~/composer/composer i --no-dev --no-interaction --prefer-dist --optimize-autoloader
+          php84 artisan optimize
+          php84 artisan migrate --force
+          php84 artisan filament:optimize
+          php84 artisan up
