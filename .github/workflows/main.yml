@@ -15,6 +15,8 @@ jobs:
       uses: oven-sh/setup-bun@v2
       with:
         bun-version: 1.2
+    - name: Install Playwright Browsers
+      run: bunx playwright install chromium --with-deps
     - name: Install Dependencies
       run: cd guest && bun install
     - name: Test (unit)
